@@ -1,0 +1,25 @@
+server:
+  port: 8089
+spring:
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.25.139
+    port: 6379
+    topic: im-message
+  datasource:
+    url: jdbc:mysql://192.168.25.139:3306/web03_chat_room?serverTimezone=GMT%2B8
+    username: root
+    password: root
+  session:
+    store-type: redis
+    timeout: 3h
+    redis:
+      flush-mode: on_save
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

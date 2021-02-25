@@ -1,0 +1,64 @@
+<html lang="en">
+    <head>
+
+    </head>
+    <body>
+        ws服务器地址: <input id="url" name="url" value="ws://localhost:8088/ws/chat">
+        连接： <input type="button" onclick="conn()"> <br>
+        接收人id: <input type="text" id="receiver">
+        输入文本： <textarea name="msg" id="msg" style="width: 100px; height: 100px"></textarea>
+        发送: <input name="send" id="send" type="button" onclick="send()">
+
+        <br><br>
+        文本显示区域：
+        <br>
+        <div id="showMsg">
+
+        </div>
+    </body>
+    <script>
+
+        var webSocket;
+        function conn() {
+            let url = document.getElementById("url").value;
+            console.log(url)
+            webSocket = new WebSocket(url);
+
+            webSocket.onopen = (ws)=>{
+                var msgHtml = "<span>已连接到服务器</span><br>"
+
+                var innerHtml = document.getElementById("showMsg").innerHTML;
+
+                document.getElementById("showMsg").innerHTML = innerHtml + msgHtml
+            }
+
+            // 收到消息
+            webSocket.onmessage = (ws)=>{
+                console.log(ws.data)
+                let msg = JSON.parse(ws.data);
+                console.log(msg);
+                var msgHtml = "<span>"+msg.message+"</span><br>"
+                var innerHtml = document.getElementById("showMsg").innerHTML;
+
+                document.getElementById("showMsg").innerHTML = innerHtml + msgHtml;
+            }
+
+            webSocket.send("hhhh")
+
+        }
+
+        function send() {
+            let receiver = document.getElementById("receiver").value
+            let msg = document.getElementById("msg").value;
+            let message = {
+                "receiveId":receiver,
+                "message":msg,
+                "type": 0
+            }
+            var msgJsonStr = JSON.stringify(message);
+            console.log(msgJsonStr);
+
+            webSocket.send(msgJsonStr);
+        }
+    </script>
+</html>
