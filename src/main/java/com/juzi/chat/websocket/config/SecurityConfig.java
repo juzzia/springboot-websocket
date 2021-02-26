@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .formLogin().defaultSuccessUrl("/chat")
-                .and().cors();
+                .and().cors().disable();
 
 //        http.addFilterBefore(dynamicFilterSecurityInterceptor(), FilterSecurityInterceptor.class);
     }
